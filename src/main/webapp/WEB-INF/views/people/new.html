@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Person</title>
+</head>
+<body>
+    <h1>Создать нового пользователя</h1>
+    <form>
+        <label for="name">Введите Ф.И.О.(10 to 50 characters) :</label>
+        <input type="text" id="name" name="name">
+        <br><br>
+        <label for="year">Введите год рождения :</label>
+        <input type="number" name="year" id="year" placeholder="YYYY" min="1920" max="2020" style="margin-left: 15px">
+        <!--<input type="text" id="year" name="year">-->
+        <br><br>
+        <input type="submit" value="Create!">
+    </form>
+
+</body>
+</html>
