@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -57,14 +58,20 @@ public class BookService {
     public void selectReader(Integer idReader, Book selectedBook){
         Person person = peopleService.findOne(idReader);
         selectedBook.setOwner(person);
+//        long dataInMillis = new Date().getTime()-864000000;
+//        Date currMinTenDays = new Date(dataInMillis);
+        selectedBook.setTakeAt(new Date());
         bookRepository.save(selectedBook);
     }
     @Transactional
     public void cancelReader(Book selectedBook){
         selectedBook.setOwner(null);
+        selectedBook.setTakeAt(null);
         bookRepository.save(selectedBook);
     }
     public List<Book> findByTitle(String title){
         return bookRepository.findByTitleStartingWith(title);
     }
+
+
 }

@@ -21,7 +21,7 @@ public class PeopleService {
         this.peopleRepository = peopleRepository;
         this.bookRepository = bookRepository;
     }
-    public List<Person> findAll(){
+    public List<Person> findAll() {
         return peopleRepository.findAll(Sort.by("birthYear"));
     }
     public Person findOne(int id){

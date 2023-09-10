@@ -2,6 +2,7 @@ package libraryHibernate.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.Date;
 
 @Entity
 @Table(name = "book")
@@ -27,6 +28,13 @@ public class Book {
 
     @Column(name = "book_year")
     private int bookYear;
+
+    @Column(name = "taken_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date takenAt;
+
+    @Transient
+    private boolean delay;
 
     public Book() {
     }
@@ -75,6 +83,22 @@ public class Book {
 
     public void setBookYear(int bookYear) {
         this.bookYear = bookYear;
+    }
+
+    public Date getTakenAt() {
+        return takenAt;
+    }
+
+    public void setTakeAt(Date takenAt) {
+        this.takenAt = takenAt;
+    }
+
+    public boolean isDelay() {
+        return delay;
+    }
+
+    public void setDelay(boolean delay) {
+        this.delay = delay;
     }
 
     @Override

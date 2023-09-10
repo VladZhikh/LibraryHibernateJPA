@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.crypto.Data;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -75,6 +76,13 @@ public class PeopleController {
     public String findBooks(@PathVariable("id") int id,Model model){
         Person person = peopleService.findOne(id);
         List<Book> bookList=bookService.findByOwner(person);
+        for (Book book : bookList){
+            //book.setDelay(false);
+            bookService.update(book.getBookId(),book);
+            long millis =book.getTakenAt().getTime();
+            long millisCurr =System.currentTimeMillis();
+            if((millisCurr-millis)>864000000) book.setDelay(true);
+        }
         model.addAttribute("book", bookList);
         model.addAttribute("person",person);
         return "people/find";

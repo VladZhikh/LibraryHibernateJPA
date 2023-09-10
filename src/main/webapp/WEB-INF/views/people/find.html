@@ -14,9 +14,9 @@
 <p th:text="${book.size()!=0} ? 'Книги :' : 'Нет ни одной книги'">TRUE or FALSE</p>
 <div th:each="book : ${book}">
   <a
-          th:href="@{/book/{id}(id=${book.getBookId()})}"
-          th:text="${book.getTitle() + ', ' + book.getAuthor()+', '+book.getBookYear()+
-     ' - '+book.getBookId()}">
+     th:href="@{/book/{id}(id=${book.getBookId()})}"
+     th:text="${book.getTitle() + ', ' + book.getAuthor()+', '+book.getBookYear()+
+     ' - '+book.getBookId()}" th:style="${book.isDelay()} ? 'color:red' : 'color:blue'">
   </a><br><br>
 </div>
 <br/>
