@@ -44,6 +44,7 @@ public class BookService {
         Book bookToBeUpdated = bookRepository.findById(id).get();
         updatedBook.setBookId(id);
         updatedBook.setOwner(bookToBeUpdated.getOwner());
+        updatedBook.setTakeAt(bookToBeUpdated.getTakenAt());
         bookRepository.save(updatedBook);
     }
     @Transactional
@@ -58,8 +59,6 @@ public class BookService {
     public void selectReader(Integer idReader, Book selectedBook){
         Person person = peopleService.findOne(idReader);
         selectedBook.setOwner(person);
-//        long dataInMillis = new Date().getTime()-864000000;
-//        Date currMinTenDays = new Date(dataInMillis);
         selectedBook.setTakeAt(new Date());
         bookRepository.save(selectedBook);
     }
@@ -73,5 +72,14 @@ public class BookService {
         return bookRepository.findByTitleStartingWith(title);
     }
 
-
+    public void checkingDelay(List<Book> bookList){
+        for (Book book : bookList){
+            //book.setDelay(false);
+            update(book.getBookId(),book);
+            long millis =book.getTakenAt().getTime();
+            long millisCurr =System.currentTimeMillis();
+            if((millisCurr-millis)>864000000) book.setDelay(true);
+            //System.out.println(book.isDelay());
+        }
+    }
 }

@@ -1,7 +1,10 @@
 package libraryHibernate.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
@@ -17,16 +20,18 @@ public class Book {
     @JoinColumn(name = "person_id",referencedColumnName = "person_id")
     private Person owner;
 
-
-
     @Column(name = "book_name")
-    @NotEmpty(message = "Name should not be empty")
+    @NotEmpty(message = "Title shouldn't be empty")
+    @Size(min = 2, max = 40, message = "Title size should be min-2 max-40 characters")
     private String title;
     @Column(name = "author")
     @NotEmpty(message = "Author should not be empty")
+    @Size(min = 2, max = 30, message = "Author size should be min-2 max-30 characters")
     private String author;
 
     @Column(name = "book_year")
+    @Min(value = 1800, message = "Рік повинен бути менше ніж 1800")
+    @Max(value = 2022, message = "Рік не повинен бути більше 2022")
     private int bookYear;
 
     @Column(name = "taken_at")

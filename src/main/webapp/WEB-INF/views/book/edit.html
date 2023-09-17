@@ -9,13 +9,18 @@
        <p th:text="${book.getBookId()}">value</p>
        <label for="name">Enter name: </label>
        <input type="text" th:field="*{title}" id="name"/>
+        <div style="color:red" th:if="${#fields.hasErrors('title')}"
+             th:errors="*{title}">Error</div>
        <br><br>
        <label for="author">Enter author: </label>
       <input type="text" th:field="*{author}" id="author"/>
+        <div style="color:red" th:if="${#fields.hasErrors('author')}"
+             th:errors="*{author}">Error</div>
       <br><br>
       <label for="year">Enter year: </label>
       <input type="text" th:field="*{bookYear}" id="year"/>
-
+        <div style="color:red" th:if="${#fields.hasErrors('bookYear')}"
+             th:errors="*{bookYear}">Error</div>
       <br/>
       <input type="submit" value="Update!"/>
     </form>

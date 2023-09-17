@@ -9,8 +9,10 @@ import libraryHibernate.services.PeopleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -41,11 +43,13 @@ public class BookController {
 
     @GetMapping("book/new")
     public String newBook(@ModelAttribute("book") Book book) {
-        System.out.println(book.getTitle() + " ," + book.getAuthor());
+        //System.out.println(book.getTitle() + " ," + book.getAuthor());
         return "book/new";
     }
     @PostMapping("book/new")
-    public String create(@ModelAttribute("book")  Book book) throws SQLException {
+    public String create(@ModelAttribute("book")  @Valid Book book,
+                         BindingResult bindingResult) throws SQLException {
+        if(bindingResult.hasErrors()) return "book/new";
         bookService.save(book);
         return "redirect:/book";
     }
@@ -69,7 +73,10 @@ public class BookController {
     }
 
     @PatchMapping("book/{id}")
-    public String update(@PathVariable("id") int id, @ModelAttribute("book") Book book) {
+    public String update(@ModelAttribute("book") @Valid Book book,BindingResult bindingResult,
+                         @PathVariable("id") int id) {
+        book.setBookId(id);
+        if(bindingResult.hasErrors()) return "book/edit";
         bookService.update(id,book);
         return "redirect:/book";
     }

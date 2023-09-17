@@ -1,6 +1,7 @@
 package libraryHibernate.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -14,11 +15,12 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer person_id;
     @Column(name = "fullname")
-    @NotEmpty(message = "Name should not be empty")
+    @NotEmpty(message = "Name shouldn't be empty")
     @Size(min = 2, max = 30, message = "Name size should be min-2 max-30 characters")
     private String fullName;
     @Column(name = "birthyear")
     @Min(value = 1900, message = "Рік народження повинен бути білбше ніж 1900")
+    @Max(value = 2022, message = "Рік не повинен бути більше 2022")
     private int birthYear;
 
     @OneToMany(mappedBy = "owner")
